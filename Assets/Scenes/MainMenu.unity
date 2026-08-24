@@ -1524,9 +1524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27b72b5b0210488fbabde8f9195c18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
-  _clickerButton: {fileID: 1268037377}
-  _memoryButton: {fileID: 651589928}
-  _reactionButton: {fileID: 92738320}
   _aceOfShadowsButton: {fileID: 1268037377}
   _magicWordsButton: {fileID: 651589928}
   _phoenixFlameButton: {fileID: 92738320}
