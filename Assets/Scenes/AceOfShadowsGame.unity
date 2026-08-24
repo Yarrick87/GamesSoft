@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 68926474}
   - component: {fileID: 68926473}
   m_Layer: 0
-  m_Name: AceOfShadows
+  m_Name: AceOfShadowsController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,6 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e28ace27e9747b6a4c491b8bcfeba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamesSoft.AceOfShadows.AceOfShadowsController
+  _cardCount: 144
+  _dealInterval: 1
+  _moveDuration: 1.5
   _cardPrefab: {fileID: 1187472686985374726, guid: 57b8e1b0e231445abb0e153c7d9567d8, type: 3}
   _spriteLibrary: {fileID: 11400000, guid: 9edef5d5b092c4826b89414d8cbea5a6, type: 2}
   _stacks:

@@ -6,10 +6,16 @@ namespace GamesSoft.AceOfShadows
 {
     public class AceOfShadowsController : MonoBehaviour
     {
-        const int CardCount = 144;
-        const float DealInterval = 1f;
-        const float MoveDuration = 1.5f;
         const int FlyingSortingOrder = 1000;
+        
+        [SerializeField]
+        private int _cardCount = 144;
+        
+        [SerializeField]
+        private float _dealInterval = 1f;
+        
+        [SerializeField]
+        private float _moveDuration = 1.5f;
 
         [SerializeField]
         private CardView _cardPrefab;
@@ -46,7 +52,7 @@ namespace GamesSoft.AceOfShadows
         {
             var cardStack = _stacks[0];
             
-            for (var cardIndex = 0; cardIndex < CardCount; cardIndex++)
+            for (var cardIndex = 0; cardIndex < _cardCount; cardIndex++)
             {
                 var card = Instantiate(_cardPrefab, cardStack.CardsRoot);
                 
@@ -58,12 +64,12 @@ namespace GamesSoft.AceOfShadows
 
         private IEnumerator DealRoutine()
         {
-            var waitTime = new WaitForSecondsRealtime(DealInterval);
+            var waitTime = new WaitForSecondsRealtime(_dealInterval);
             
             var sourceCardStack = _stacks[0];
             var destinationCardStack = _stacks[1];
 
-            while (_movedCards < CardCount)
+            while (_movedCards < _cardCount)
             {
                 yield return waitTime;
 
@@ -91,10 +97,10 @@ namespace GamesSoft.AceOfShadows
 
             var elapsedTime = 0f;
             
-            while (elapsedTime < MoveDuration)
+            while (elapsedTime < _moveDuration)
             {
                 elapsedTime += Time.unscaledDeltaTime;
-                var time = Mathf.Clamp01(elapsedTime / MoveDuration);
+                var time = Mathf.Clamp01(elapsedTime / _moveDuration);
                 var easedTime = time * time * (3f - 2f * time);
                 card.Transform.position = EvaluateArc(startPos, controlPos, endPos, easedTime);
                 
@@ -105,7 +111,7 @@ namespace GamesSoft.AceOfShadows
             destination.Push(card);
             _cardsInFlight--;
 
-            if (!_finished && _movedCards >= CardCount && _cardsInFlight == 0)
+            if (!_finished && _movedCards >= _cardCount && _cardsInFlight == 0)
             {
                 _finished = true;
                 ShowStatus("All cards have moved");
