@@ -25,7 +25,7 @@ namespace GamesSoft.Menu
 
         private void OnDestroy()
         {
-            if(_aceOfShadowsButton != null) _aceOfShadowsButton.onClick.RemoveListener(OnAceOfShadowsButtonClick);
+            if(_aceOfShadowsButton != null)
             {
                 _aceOfShadowsButton.onClick.RemoveListener(OnAceOfShadowsButtonClick);
             }

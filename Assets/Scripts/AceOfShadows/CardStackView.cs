@@ -18,8 +18,6 @@ namespace GamesSoft.AceOfShadows
         private readonly List<CardView> _cards = new List<CardView>();
         private int _incomingCount;
 
-        public int Count => _cards.Count;
-
         public int NextSlotIndex => _cards.Count + _incomingCount;
 
         public Transform CardsRoot => _cardsRoot;
@@ -60,7 +58,7 @@ namespace GamesSoft.AceOfShadows
             return _cardsRoot.TransformPoint(GetLocalPosition(index));
         }
 
-        public Vector3 GetLocalPosition(int index)
+        private Vector3 GetLocalPosition(int index)
         {
             return _cardOffset * index;
         }
