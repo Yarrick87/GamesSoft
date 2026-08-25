@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -34,20 +35,31 @@ namespace GamesSoft.MagicWords
 
         private async void Start()
         {
+            var token = destroyCancellationToken;
             ShowStatus("Loading...");
 
             try
             {
-                var data = await FetchDialogue();
-                BuildSpeakerProfiles(data);
+                var data = await FetchDialogue(token);
+                token.ThrowIfCancellationRequested();
 
-                await LoadAvatars();
+                BuildSpeakerProfiles(data);
+                await LoadAvatars(token);
+                token.ThrowIfCancellationRequested();
 
                 HideStatus();
                 ShowMessages(data);
             }
+            catch (OperationCanceledException)
+            {
+            }
             catch (Exception exception)
             {
+                if (!this)
+                {
+                    return;
+                }
+
                 Debug.LogError($"Magic Words failed to load: {exception}");
                 ShowStatus("Failed to load dialogue");
             }
@@ -64,10 +76,13 @@ namespace GamesSoft.MagicWords
             }
         }
 
-        private async Awaitable<MagicWordsResponse> FetchDialogue()
+        private async Awaitable<MagicWordsResponse> FetchDialogue(CancellationToken token)
         {
             using var request = UnityWebRequest.Get(_endpoint);
+            using var registration = token.Register(request.Abort);
+
             await request.SendWebRequest();
+            token.ThrowIfCancellationRequested();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -133,11 +148,12 @@ namespace GamesSoft.MagicWords
             }
         }
 
-        private async Awaitable LoadAvatars()
+        private async Awaitable LoadAvatars(CancellationToken token)
         {
             foreach (var pair in _speakers)
             {
-                var sprite = await LoadFirstValidAvatar(pair.Value.AvatarUrls);
+                token.ThrowIfCancellationRequested();
+                var sprite = await LoadFirstValidAvatar(pair.Value.AvatarUrls, token);
 
                 if (sprite != null)
                 {
@@ -146,7 +162,7 @@ namespace GamesSoft.MagicWords
             }
         }
 
-        private async Awaitable<Sprite> LoadFirstValidAvatar(List<string> urls)
+        private async Awaitable<Sprite> LoadFirstValidAvatar(List<string> urls, CancellationToken token)
         {
             if (urls.Count == 0)
             {
@@ -155,7 +171,8 @@ namespace GamesSoft.MagicWords
 
             foreach (string url in urls)
             {
-                var sprite = await TryLoadSprite(url);
+                token.ThrowIfCancellationRequested();
+                var sprite = await TryLoadSprite(url, token);
 
                 if (sprite != null)
                 {
@@ -166,7 +183,7 @@ namespace GamesSoft.MagicWords
             return null;
         }
 
-        private async Awaitable<Sprite> TryLoadSprite(string url)
+        private async Awaitable<Sprite> TryLoadSprite(string url, CancellationToken token)
         {
             if (string.IsNullOrWhiteSpace(url) || !Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
@@ -176,7 +193,10 @@ namespace GamesSoft.MagicWords
             try
             {
                 using var request = UnityWebRequestTexture.GetTexture(url);
+                using var registration = token.Register(request.Abort);
+
                 await request.SendWebRequest();
+                token.ThrowIfCancellationRequested();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -197,6 +217,10 @@ namespace GamesSoft.MagicWords
                     new Rect(0f, 0f, texture.width, texture.height),
                     new Vector2(0.5f, 0.5f),
                     100f);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception exception)
             {
@@ -238,11 +262,21 @@ namespace GamesSoft.MagicWords
 
         private void HideStatus()
         {
+            if (_statusText == null)
+            {
+                return;
+            }
+
             _statusText.gameObject.SetActive(false);
         }
 
         private void ShowStatus(string message)
         {
+            if (_statusText == null)
+            {
+                return;
+            }
+
             _statusText.text = message;
             _statusText.gameObject.SetActive(true);
         }
