@@ -95,7 +95,7 @@ namespace GamesSoft.AceOfShadows
 
             var startPos = card.Transform.position;
             var endPos = destination.GetWorldPositionForIndex(slotIndex);
-            var controlPos = (startPos + endPos) * 0.5f + Vector3.right * 2.2f;
+            var controlPos = (startPos + endPos) * 0.5f + Vector3.up * 2.2f;
 
             card.Transform.SetParent(_flightLayer, true);
             card.SetSortingOrder(FlyingSortingOrder + _cardsInFlight);

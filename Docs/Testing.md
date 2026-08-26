@@ -35,7 +35,7 @@ Implementation: `Assets/Editor/EditModeTestRunner.cs`.
 | `MagicWordsDataTests` | `MagicWordsDataTests.cs` | `SpeakerAlignment.IsRight`, `JsonUtility` parse / missing arrays |
 | `CardSpriteLibraryTests` | `CardSpriteLibraryTests.cs` | Empty library → null; index wrap via SerializedObject faces |
 | `CardArcTests` | `CardArcTests.cs` | Bezier endpoints and midpoint formula |
-| `CardStackViewTests` | `CardStackViewTests.cs` | Empty `Pop`, push/pop, `BeginIncoming` / `NextSlotIndex`, horizontal slot positions |
+| `CardStackViewTests` | `CardStackViewTests.cs` | Empty `Pop`, push/pop, `BeginIncoming` / `NextSlotIndex`, vertical slot positions |
 | `SceneLoaderTests` | `SceneLoaderTests.cs` | Scene name constants match Build Settings names |
 
 ## Editor utilities related to hygiene

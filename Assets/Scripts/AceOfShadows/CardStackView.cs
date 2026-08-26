@@ -13,7 +13,7 @@ namespace GamesSoft.AceOfShadows
         private TMP_Text _counter;
         
         [SerializeField]
-        private Vector3 _cardOffset = new Vector3(0.08f, 0f, 0f);
+        private Vector3 _cardOffset = new Vector3(0f, -0.08f, 0f);
 
         private readonly List<CardView> _cards = new List<CardView>();
         private int _incomingCount;
@@ -67,7 +67,6 @@ namespace GamesSoft.AceOfShadows
         {
             var cardTransform = card.Transform;
             cardTransform.localPosition = GetLocalPosition(index);
-            cardTransform.localRotation = Quaternion.identity;
             card.SetSortingOrder(index);
         }
 

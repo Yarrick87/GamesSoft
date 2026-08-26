@@ -41,10 +41,10 @@ namespace GamesSoft.Tests.EditMode
         }
 
         [Test]
-        public void GetWorldPositionForIndex_UsesHorizontalCardOffset()
+        public void GetWorldPositionForIndex_UsesVerticalCardOffset()
         {
             var stack = CreateStack(out var root, out var cardsRoot);
-            var offset = new Vector3(0.08f, 0f, 0f);
+            var offset = new Vector3(0f, -0.08f, 0f);
             var serialized = new SerializedObject(stack);
             serialized.FindProperty("_cardOffset").vector3Value = offset;
             serialized.ApplyModifiedPropertiesWithoutUndo();
