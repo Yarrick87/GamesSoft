@@ -27,6 +27,7 @@ namespace GamesSoft.PhoenixFlame
         private int _colorIndex;
         private bool _isTransitioning;
         private Color _fireColor;
+        private ParticleSystem.Particle[] _particleBuffer;
 
         private void Awake()
         {
@@ -93,6 +94,8 @@ namespace GamesSoft.PhoenixFlame
 
         private void ApplyFireColor(Color color)
         {
+            var tint = (Color32)color;
+
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var system = _particleSystems[i];
@@ -104,6 +107,28 @@ namespace GamesSoft.PhoenixFlame
 
                 var main = system.main;
                 main.startColor = color;
+
+                var particleCount = system.particleCount;
+                
+                if (particleCount == 0)
+                {
+                    continue;
+                }
+
+                if (_particleBuffer == null || _particleBuffer.Length < particleCount)
+                {
+                    _particleBuffer = new ParticleSystem.Particle[particleCount];
+                }
+
+                var readCount = system.GetParticles(_particleBuffer);
+                
+                for (var p = 0; p < readCount; p++)
+                {
+                    var current = _particleBuffer[p].startColor;
+                    _particleBuffer[p].startColor = new Color32(tint.r, tint.g, tint.b, current.a);
+                }
+
+                system.SetParticles(_particleBuffer, readCount);
             }
         }
     }
