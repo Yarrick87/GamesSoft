@@ -8,7 +8,7 @@ Unity 6 take-home project for SoftGames: a main menu and three independent mini-
 | **Render pipeline** | URP 2D |
 | **Product** | GamesSoft `1.0` |
 | **Primary platform** | Editor + WebGL |
-| **Orientation** | Landscape (auto-rotate left/right) |
+| **Orientation** | Portrait |
 
 ## Documentation map
 

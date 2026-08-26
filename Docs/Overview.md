@@ -61,8 +61,9 @@ GamesSoft is a SoftGames-style Unity assignment demonstrating:
 
 ## Player settings (current)
 
-- **Orientation:** Auto Rotation with **landscape left/right** enabled; portrait disabled  
-- **WebGL default size:** configured in Player Settings (landscape-oriented)  
+- **Orientation:** **Portrait** (landscape disabled)  
+- **UI reference resolution:** 1080×1920 on scene canvases  
+- **WebGL default size:** portrait-oriented in Player Settings  
 - **WebGL compression:** Gzip (`webGLCompressionFormat: 2`) — see [Build-and-WebGL.md](Build-and-WebGL.md) if hosting on GitHub Pages  
 
 ## UI conventions
