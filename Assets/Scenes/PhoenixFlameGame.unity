@@ -269,6 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4685fe43cf6324d38ba6a7ca80ccfa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamesSoft.PhoenixFlame.PhoenixFlameController
+  _colors:
+  - {r: 1, g: 0.45, b: 0.08, a: 1}
+  - {r: 0.25, g: 0.95, b: 0.35, a: 1}
+  - {r: 0.25, g: 0.55, b: 1, a: 1}
   _particleSystems:
   - {fileID: 1626699073}
   - {fileID: 2007658351}
@@ -5491,15 +5495,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5507,7 +5511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchorMin.y
@@ -5551,11 +5555,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 5961936529682663811, guid: d6a0cd75e95ad4317aba1246a5b109da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
