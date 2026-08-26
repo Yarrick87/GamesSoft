@@ -1,5 +1,3 @@
-using System;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +5,10 @@ namespace GamesSoft.PhoenixFlame
 {
     public class PhoenixFlameController : MonoBehaviour
     {
+        private static readonly int ColorIndexHash = Animator.StringToHash("ColorIndex");
+
         [SerializeField]
-        private Color[] _colors =
-        {
-            new Color(1f, 0.45f, 0.08f, 1f),
-            new Color(0.25f, 0.95f, 0.35f, 1f),
-            new Color(0.25f, 0.55f, 1f, 1f)
-        };
+        private Animator _animator;
 
         [SerializeField]
         private ParticleSystem[] _particleSystems;
@@ -22,16 +17,17 @@ namespace GamesSoft.PhoenixFlame
         private Button _cycleColorButton;
 
         [SerializeField]
-        private float _transitionDuration = 0.85f;
+        private int _colorCount = 3;
+
+        [SerializeField]
+        private Color _fireColor = new Color(1f, 0.45f, 0.08f, 1f);
 
         private int _colorIndex;
-        private bool _isTransitioning;
-        private Color _fireColor;
+        private Color _appliedColor;
         private ParticleSystem.Particle[] _particleBuffer;
 
         private void Awake()
         {
-            _fireColor = _colors[_colorIndex];
             _cycleColorButton.onClick.AddListener(OnCycleColorClicked);
             ApplyFireColor(_fireColor);
         }
@@ -44,59 +40,33 @@ namespace GamesSoft.PhoenixFlame
             }
         }
 
-        private async void OnCycleColorClicked()
+        private void LateUpdate()
         {
-            if (_isTransitioning)
+            if (_fireColor == _appliedColor)
             {
                 return;
             }
 
-            _isTransitioning = true;
-
-            try
-            {
-                var nextIndex = (_colorIndex + 1) % _colors.Length;
-                await TransitionTo(_colors[nextIndex], destroyCancellationToken);
-                _colorIndex = nextIndex;
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            finally
-            {
-                if (this)
-                {
-                    _isTransitioning = false;
-                }
-            }
+            ApplyFireColor(_fireColor);
         }
 
-        private async Awaitable TransitionTo(Color targetColor, CancellationToken token)
+        private void OnCycleColorClicked()
         {
-            var fromColor = _fireColor;
-            var elapsedTime = 0f;
-
-            while (elapsedTime < _transitionDuration)
+            if (_animator == null || _animator.IsInTransition(0))
             {
-                token.ThrowIfCancellationRequested();
-
-                elapsedTime += Time.deltaTime;
-                var time = Mathf.SmoothStep(0f, 1f, elapsedTime / _transitionDuration);
-                _fireColor = Color.Lerp(fromColor, targetColor, time);
-                ApplyFireColor(_fireColor);
-                await Awaitable.NextFrameAsync(token);
+                return;
             }
 
-            token.ThrowIfCancellationRequested();
-            _fireColor = targetColor;
-            ApplyFireColor(_fireColor);
+            _colorIndex = (_colorIndex + 1) % Mathf.Max(1, _colorCount);
+            _animator.SetInteger(ColorIndexHash, _colorIndex);
         }
 
         private void ApplyFireColor(Color color)
         {
+            _appliedColor = color;
             var tint = (Color32)color;
 
-            for (int i = 0; i < _particleSystems.Length; i++)
+            for (var i = 0; i < _particleSystems.Length; i++)
             {
                 var system = _particleSystems[i];
 

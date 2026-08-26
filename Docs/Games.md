@@ -141,24 +141,23 @@ Known emoji keys: `satisfied`, `intrigued`, `neutral`, `affirmative`, `laughing`
 ### Gameplay / UX
 
 - Several `ParticleSystem`s render a fire (and related) effect.
-- **Next Color** cycles through three colors: orange → green → blue.
-- Transition uses `Color.Lerp` over `_transitionDuration` (default **0.85s**) with `SmoothStep`.
-- While transitioning, further clicks are ignored (`_isTransitioning`).
-- Live particles are recolored via `GetParticles` / `SetParticles` (RGB from target, **alpha preserved**).
-- `main.startColor` is updated so new particles spawn in the new color.
-- Cancel-safe: `destroyCancellationToken` on the async transition; `OperationCanceledException` ignored.
+- **Next Color** cycles orange → green → blue through an **Animator** (`FireColor.controller`).
+- Parameter `ColorIndex` selects the state; transitions last **0.85s** and blend `_fireColor` on `PhoenixFlameController`.
+- While a transition is active, further clicks are ignored (`Animator.IsInTransition`).
+- `LateUpdate` applies the animated `_fireColor` to particles (`main.startColor` + live `GetParticles` / `SetParticles`, RGB tint, **alpha preserved**).
 
 ### Scripts
 
 | Type | File | Responsibility |
 |------|------|----------------|
-| `PhoenixFlameController` | `PhoenixFlameController.cs` | Button, lerp loop, particle tint |
+| `PhoenixFlameController` | `PhoenixFlameController.cs` | Button → Animator `ColorIndex`; apply tint to particles |
 
 ### Art
 
 - `Assets/Art/PhoenixFlame/FlameParticle.mat`
 - `Assets/Art/PhoenixFlame/SmokeParticle.mat`
 - `Assets/Art/PhoenixFlame/SoftParticle.png`
+- `Assets/Art/PhoenixFlame/FireColor.controller` (+ `FireColor_Orange/Green/Blue.anim`)
 
 ---
 
@@ -167,7 +166,7 @@ Known emoji keys: `satisfied`, `intrigued`, `neutral`, `affirmative`, `laughing`
 | Topic | Where |
 |-------|--------|
 | Scene load debounce | `SceneLoader` |
-| Cancel on unload | Magic Words, Phoenix Flame, menu/back loaders |
+| Cancel on unload | Magic Words, menu/back loaders |
 | Pure logic under test | `DialogueTextFormatter`, `CardArc`, `SpeakerAlignment`, `CardSpriteLibrary`, `CardStackView` |
 | Prefabs | `Assets/Prefabs/` |
 | Build scenes | `ProjectSettings/EditorBuildSettings.asset` |

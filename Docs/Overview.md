@@ -17,7 +17,7 @@ GamesSoft is a SoftGames-style Unity assignment demonstrating:
 | Main menu | Three buttons load game scenes asynchronously |
 | Ace of Shadows | Spawns 144 cards; every 1s moves top card along a Bezier arc to the other stack |
 | Magic Words | Fetches JSON dialogue + avatars; left/right bubbles; `{emoji}` and `*italic*` formatting |
-| Phoenix Flame | Multi-system particle fire; button cycles orange → green → blue with live recolor |
+| Phoenix Flame | Multi-system particle fire; button cycles colors via Animator transitions |
 | FPS | Top-left style counter, singleton + `DontDestroyOnLoad` |
 | Back | Prefab button loads `MainMenu` with cancellation support |
 

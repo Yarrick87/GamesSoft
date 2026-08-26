@@ -115,4 +115,4 @@ Game controller MonoBehaviour
 | Add a fourth mini-game | New scene + scripts folder; register in Build Settings; add menu button + `SceneLoader` constant |
 | Change Magic Words API | `_endpoint` on `MagicWordsController` or default constant |
 | Tune Ace timing | `_cardCount`, `_dealInterval`, `_moveDuration` on `AceOfShadowsController` |
-| Tune flame colors / duration | `_colors`, `_transitionDuration` on `PhoenixFlameController` |
+| Tune flame colors / duration | `FireColor_*.anim` clips and transition duration on `FireColor.controller` |
