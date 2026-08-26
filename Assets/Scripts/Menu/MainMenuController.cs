@@ -25,7 +25,7 @@ namespace GamesSoft.Menu
 
         private void OnDestroy()
         {
-            if(_aceOfShadowsButton != null)
+            if (_aceOfShadowsButton != null)
             {
                 _aceOfShadowsButton.onClick.RemoveListener(OnAceOfShadowsButtonClick);
             }
@@ -60,7 +60,10 @@ namespace GamesSoft.Menu
         {
             try
             {
-                await SceneLoader.Load(sceneName);
+                await SceneLoader.Load(sceneName, destroyCancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
             }
             catch (Exception exception)
             {

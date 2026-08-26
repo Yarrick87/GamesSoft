@@ -26,7 +26,10 @@ namespace GamesSoft.Core
         {
             try
             {
-                await SceneLoader.Load(SceneLoader.Menu);
+                await SceneLoader.Load(SceneLoader.Menu, destroyCancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
             }
             catch (Exception exception)
             {
