@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,16 +23,20 @@ namespace GamesSoft.Core
 
             cancellationToken.ThrowIfCancellationRequested();
 
+            var operation = SceneManager.LoadSceneAsync(sceneName);
+            
+            if (operation == null)
+            {
+                throw new InvalidOperationException($"Scene '{sceneName}' could not be loaded.");
+            }
+
             _isLoading = true;
 
             try
             {
-                var operation = SceneManager.LoadSceneAsync(sceneName);
-
                 while (!operation.isDone)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await Awaitable.NextFrameAsync(cancellationToken);
+                    await Awaitable.NextFrameAsync();
                 }
             }
             finally

@@ -74,6 +74,11 @@ namespace GamesSoft.AceOfShadows
                 yield return waitTime;
 
                 var card = sourceCardStack.Pop();
+                
+                if (card == null)
+                {
+                    yield break;
+                }
 
                 StartCoroutine(MoveCard(card, destinationCardStack));
                 
