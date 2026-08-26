@@ -107,7 +107,7 @@ namespace GamesSoft.AceOfShadows
                 elapsedTime += Time.unscaledDeltaTime;
                 var time = Mathf.Clamp01(elapsedTime / _moveDuration);
                 var easedTime = time * time * (3f - 2f * time);
-                card.Transform.position = EvaluateArc(startPos, controlPos, endPos, easedTime);
+                card.Transform.position = CardArc.Evaluate(startPos, controlPos, endPos, easedTime);
                 
                 yield return null;
             }
@@ -121,13 +121,6 @@ namespace GamesSoft.AceOfShadows
                 _finished = true;
                 ShowStatus("All cards have moved");
             }
-        }
-
-        private Vector3 EvaluateArc(Vector3 startPos, Vector3 controlPos, Vector3 endPos, float time)
-        {
-            var oneMinus = 1f - time;
-            
-            return oneMinus * oneMinus * startPos + 2f * oneMinus * time * controlPos + time * time * endPos;
         }
 
         private void HideStatus()

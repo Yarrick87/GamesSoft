@@ -119,7 +119,7 @@ namespace GamesSoft.MagicWords
                         profile = new SpeakerProfile
                         {
                             Name = entry.name,
-                            AlignRight = IsRight(entry.position)
+                            AlignRight = SpeakerAlignment.IsRight(entry.position)
                         };
                         _speakers.Add(entry.name, profile);
                     }
@@ -281,10 +281,5 @@ namespace GamesSoft.MagicWords
             _statusText.gameObject.SetActive(true);
         }
 
-        private static bool IsRight(string position)
-        {
-            return !string.IsNullOrEmpty(position) &&
-                   position.Equals("right", StringComparison.OrdinalIgnoreCase);
-        }
     }
 }

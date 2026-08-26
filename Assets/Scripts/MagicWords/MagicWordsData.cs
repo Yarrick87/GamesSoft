@@ -33,4 +33,13 @@ namespace GamesSoft.MagicWords
         public Sprite Avatar;
         public List<string> AvatarUrls { get; } = new List<string>();
     }
+
+    public static class SpeakerAlignment
+    {
+        public static bool IsRight(string position)
+        {
+            return !string.IsNullOrEmpty(position) &&
+                   position.Equals("right", StringComparison.OrdinalIgnoreCase);
+        }
+    }
 }

@@ -10,8 +10,12 @@ namespace GamesSoft.AceOfShadows
 
         public Sprite GetFace(int cardIndex)
         {
-            var faceIndex = cardIndex % _faces.Length;
+            if (_faces == null || _faces.Length == 0)
+            {
+                return null;
+            }
 
+            var faceIndex = Mathf.Abs(cardIndex % _faces.Length);
             return _faces[faceIndex];
         }
     }

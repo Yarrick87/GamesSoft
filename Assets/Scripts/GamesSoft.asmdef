@@ -1,0 +1,17 @@
+{
+    "name": "GamesSoft",
+    "rootNamespace": "GamesSoft",
+    "references": [
+        "Unity.TextMeshPro",
+        "Unity.ugui"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

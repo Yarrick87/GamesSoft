@@ -110,3 +110,7 @@ InitTestScene*.unity*
 
 # Rider IDE
 .idea/
+
+# Local Unity test runner output
+/TestResults*.txt
+/TestResults*.xml
