@@ -17,7 +17,7 @@ Detailed behavior and script map for each mini-game.
 5. Multiple cards can be in flight at once; flying cards use elevated sorting order.
 6. When all cards have been dispatched and none remain in flight, show status: *All cards have moved*.
 
-Stacks are world-space rows (`Row_0` / `Row_1`) with a small horizontal `_cardOffset` so the deck fans out.
+Stacks are world-space rows stacked **vertically** for portrait (`Row_0` above `Row_1`). Within each row, cards fan **horizontally** via `_cardOffset` (default `(0.08, 0, 0)`).
 
 ### Scripts
 
@@ -44,7 +44,7 @@ B(t) = (1-t)^2 P_0 + 2(1-t)t P_1 + t^2 P_2
 
 Easing on \(t\): smoothstep-style `t * t * (3 - 2 * t)`.
 
-Control point: midpoint between start/end + world up offset (`1.2`).
+Control point: midpoint between start/end + world **right** offset (`2.2`) so the arc bows sideways while cards move between the upper and lower rows.
 
 ### Edge cases
 

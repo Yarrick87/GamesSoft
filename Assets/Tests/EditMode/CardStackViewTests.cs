@@ -40,11 +40,32 @@ namespace GamesSoft.Tests.EditMode
             Object.DestroyImmediate(root);
         }
 
+        [Test]
+        public void GetWorldPositionForIndex_UsesHorizontalCardOffset()
+        {
+            var stack = CreateStack(out var root, out var cardsRoot);
+            var offset = new Vector3(0.08f, 0f, 0f);
+            var serialized = new SerializedObject(stack);
+            serialized.FindProperty("_cardOffset").vector3Value = offset;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+
+            Assert.That(stack.GetWorldPositionForIndex(0), Is.EqualTo(cardsRoot.position));
+            Assert.That(stack.GetWorldPositionForIndex(3), Is.EqualTo(cardsRoot.position + offset * 3));
+
+            Object.DestroyImmediate(root);
+        }
+
         private static CardStackView CreateStack(out GameObject root)
+        {
+            return CreateStack(out root, out _);
+        }
+
+        private static CardStackView CreateStack(out GameObject root, out Transform cardsRootTransform)
         {
             root = new GameObject("Stack");
             var cardsRoot = new GameObject("CardsRoot");
             cardsRoot.transform.SetParent(root.transform);
+            cardsRootTransform = cardsRoot.transform;
 
             var counterObject = new GameObject("Counter", typeof(TextMeshPro));
             counterObject.transform.SetParent(root.transform);
